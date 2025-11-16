@@ -1,13 +1,49 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport"
-    content="width=device-width, initial-scale=1.0 "/>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
     <title>Oyarzo</title>
+
+    <!-- Estilos para el texto del corazón -->
+    <style>
+      body {
+        margin: 0;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        position: relative;
+      }
+
+      #texto-corazon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -80%);
+        font-size: 50px;
+        font-weight: bold;
+        color: #ff7fbf;
+        letter-spacing: 2px;
+        text-shadow: 0 0 20px #ff5fa5;
+        font-family: Arial, sans-serif;
+        user-select: none;
+      }
+    </style>
   </head>
+
   <body>
+    <!-- Texto centrado -->
+    <div id="texto-corazon">pa ti oyarzo</div>
+
+    <!-- Canvas del corazón -->
     <canvas id="pinkboard"></canvas>
-    
-    <script src="pink_heart.js"> </script>
+
+    <!-- Lógica del corazón -->
+    <script src="pink_heart.js"></script>
   </body>
 </html>
