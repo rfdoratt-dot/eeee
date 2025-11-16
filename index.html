@@ -1,49 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
-    <title>Oyarzo</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corazón Perfecto</title>
 
-    <!-- Estilos para el texto del corazón -->
     <style>
-      body {
-        margin: 0;
-        background: #000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        position: relative;
-      }
+        body {
+            margin: 0;
+            background: #000;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
 
-      #texto-corazon {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -80%);
-        font-size: 50px;
-        font-weight: bold;
-        color: #ff7fbf;
-        letter-spacing: 2px;
-        text-shadow: 0 0 20px #ff5fa5;
-        font-family: Arial, sans-serif;
-        user-select: none;
-      }
+        #texto-corazon {
+            position: absolute;
+            top: 67%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 0 20px white;
+            letter-spacing: 2px;
+            z-index: 10;
+        }
+
+        canvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
     </style>
-  </head>
+</head>
+<body>
 
-  <body>
-    <!-- Texto centrado -->
+    <canvas id="canvas"></canvas>
     <div id="texto-corazon">pa ti oyarzo</div>
 
-    <!-- Canvas del corazón -->
-    <canvas id="pinkboard"></canvas>
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
-    <!-- Lógica del corazón -->
-    <script src="pink_heart.js"></script>
-  </body>
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resize();
+window.onresize = resize;
+
+// ❤️ LATIDO
+let scale = 1;
+let grow = true;
+
+function heartbeat() {
+    if (grow) {
+        scale += 0.006;
+        if (scale >= 1.10) grow = false;
+    } else {
+        scale -= 0.006;
+        if (scale <= 1.00) grow = true;
+    }
+}
+
+// ❤️ NUEVA FUNCIÓN — CORAZÓN ULTRA SIMÉTRICO
+function drawPerfectHeart(x, y, size) {
+    ctx.save();
+
+    ctx.translate(x, y);
+    ctx.scale(scale, scale);
+    ctx.translate(-x, -y);
+
+    ctx.beginPath();
+    ctx.moveTo(x, y + size * 0.25);
+
+    ctx.bezierCurveTo(
+        x - size,       y - size * 0.35,   // izquierda arriba
+        x - size * 1.25, y + size * 0.55,  // izquierda abajo
+        x,               y + size * 1.35
+    );
+
+    ctx.bezierCurveTo(
+        x + size * 1.25, y + size * 0.55,  // derecha abajo
+        x + size,       y - size * 0.35,   // derecha arriba
+        x,               y + size * 0.25
+    );
+
+    ctx.fillStyle = "#ff7fbf";
+    ctx.shadowColor = "#ff9bd4";
+    ctx.shadowBlur = 40;
+    ctx.fill();
+
+    ctx.restore();
+}
+
+// ❤️ LOOP
+function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawPerfectHeart(canvas.width / 2, canvas.height / 2 - 60, 130);
+    heartbeat();
+    requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+
+</body>
 </html>
+
